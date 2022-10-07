@@ -1,5 +1,5 @@
 import React from 'react';
-import {Field, Form, Formik, useField, useFormikContext} from 'formik';
+import {Field, Form, Formik} from 'formik';
 import * as Yup from 'yup';
 import CheckboxSelectBetweenTwo from "./CheckboxSelectBetweenTwo";
 
@@ -26,6 +26,7 @@ const RegistrationForm = () => {
                 sname: '',
                 email: '',
                 description: '',
+                wantGetUpdatesByEmail: true,
             }}
             validationSchema={SignupSchema}
 
@@ -33,7 +34,7 @@ const RegistrationForm = () => {
                 console.log(JSON.stringify(values, null, 1))
             }
         >
-            {({errors, touched, values}) => {
+            {({errors, touched}) => {
                 return (<Form>
                         <label htmlFor="name">Name</label>
                         <br/>
