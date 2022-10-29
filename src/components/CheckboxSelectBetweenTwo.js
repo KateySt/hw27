@@ -1,28 +1,31 @@
 import {useFormikContext} from "formik";
-import React from "react";
+import React, {useState} from "react";
 
 const CheckboxSelectBetweenTwo = ({field}) => {
     const formikProps = useFormikContext();
-
-    const checkingFirstCheckbox = () => {
-        if (document.getElementById('checkbox1').checked === true) {
-            document.getElementById('checkbox2').checked = false;
+    const [first, setFirst] = useState(true);
+    const [second, setSecond] = useState(false);
+    const checkingFirstCheckbox = (e) => {
+        setFirst(e.target.checked)
+        if (e.target.checked === true) {
+            setSecond(false);
         }
     }
 
-    const checkingSecondCheckbox =() => {
-        if (document.getElementById('checkbox2').checked === true) {
-            document.getElementById('checkbox1').checked = false;
-            formikProps.setFieldValue("wantGetUpdatesByEmail", false);
+    const checkingSecondCheckbox = (e) => {
+        setSecond(e.target.checked);
+        if (e.target.checked === true) {
+            setFirst(false);
+           formikProps.setFieldValue("wantGetUpdatesByEmail", false);
         }
     }
 
     return (
         <label className="text-gray-500 font-bold">
-            <input id="checkbox1" {...field}  type="checkbox" onClick={checkingFirstCheckbox}/>
+            <input id="checkbox1" {...field} type="checkbox" onClick={checkingFirstCheckbox} checked={first}/>
             <span>Confirm sending your email</span>
             <br/>
-            <input id="checkbox2" type="checkbox" onClick={checkingSecondCheckbox}/>
+            <input id="checkbox2" type="checkbox" onClick={checkingSecondCheckbox} checked={second}/>
             <span>Do not send letters</span>
             <br/>
         </label>
